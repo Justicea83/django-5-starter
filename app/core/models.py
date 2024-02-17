@@ -34,3 +34,8 @@ class User(AbstractBaseUser, PermissionsMixin, models.Model):
     objects = UserManager()
 
     USERNAME_FIELD = 'email'
+
+
+class Todo(models.Model):
+    name = models.CharField(max_length=255)
+    description = models.TextField(default=True, null=True, blank=True)
