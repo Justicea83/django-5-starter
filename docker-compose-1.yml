@@ -1,0 +1,84 @@
+version: "3.9"
+
+services:
+  app:
+    env_file:
+      - app/.env
+    container_name: starter_app
+    build:
+      context: .
+      dockerfile: Dockerfile
+      args:
+        - DEV=true
+    ports:
+      - "${FORWARD_APP_PORT:-8000}:8000"
+    volumes:
+      - ./app:/app
+    command: >
+      sh -c "python manage.py wait_for_db &&
+             python manage.py migrate &&
+             python manage.py runserver 0.0.0.0:8000"
+    environment:
+      DB_HOST: "${DB_HOST}"
+      DB_NAME: "${DB_DATABASE}"
+      DB_USER: "${DB_USERNAME}"
+      DB_PASSWORD: "${DB_PASSWORD}"
+    depends_on:
+      - db
+      - redis
+
+  db:
+    env_file:
+      - app/.env
+    image: 'postgres:15-alpine'
+    container_name: starter_db_server
+    ports:
+      - '${FORWARD_DB_PORT:-5432}:5432'
+    environment:
+      PGPASSWORD: "${DB_PASSWORD}"
+      POSTGRES_DB: "${DB_DATABASE}"
+      POSTGRES_USER: "${DB_USERNAME}"
+      POSTGRES_PASSWORD: "${DB_PASSWORD}"
+    volumes:
+      - 'db-data:/var/lib/postgresql/data'
+
+  adminer:
+    env_file:
+      - app/.env
+    container_name: capstone_adminer
+    image: dpage/pgadmin4:latest
+    environment:
+      PGADMIN_DEFAULT_EMAIL: "${PGADMIN_DEFAULT_EMAIL}"
+      PGADMIN_DEFAULT_PASSWORD: "${PGADMIN_DEFAULT_PASSWORD}"
+      PGADMIN_LISTEN_PORT: "5050"
+    depends_on:
+      - db
+    ports:
+      - "${FORWARD_PGADMIN_PORT:-5050}:5050"
+    volumes:
+      - pgadmin-data:/var/lib/pgadmin
+
+  redisinsight:
+    image: redislabs/redisinsight:latest
+    ports:
+      - '8091:8001'
+
+  redis:
+    image: 'redis:alpine'
+    command: redis-server --appendonly yes --replica-read-only no
+    ports:
+      - '${FORWARD_REDIS_PORT:-6379}:6379'
+    volumes:
+      - 'starter-redis:/data'
+    healthcheck:
+      test:
+        - CMD
+        - redis-cli
+        - ping
+      retries: 3
+      timeout: 5s
+
+volumes:
+  db-data:
+  pgadmin-data:
+  starter-redis:
