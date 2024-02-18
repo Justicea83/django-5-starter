@@ -11,3 +11,4 @@ tqdm==4.66.1
 python-dateutil==2.8.2
 plac==1.4.2
 django-filter==23.5
+django-redis==5.4.0
