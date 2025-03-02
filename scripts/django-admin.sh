@@ -10,4 +10,4 @@ fi
 COMMAND_ARGS="$@"
 
 # Execute the Docker Compose command with the provided arguments
-docker-compose -f ./docker-compose.yml --env-file ./app/.env run --rm app sh -c "django-admin $COMMAND_ARGS"
+docker compose -f ./docker-compose.yml --env-file ./app/.env run --rm app sh -c "django-admin $COMMAND_ARGS"

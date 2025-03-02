@@ -13,7 +13,7 @@ FLAGS=${@:2} # All additional arguments starting from the 2nd
 # Execute the Docker Compose command
 # Check if flags are provided and pass them if they are
 if [ -z "$FLAGS" ]; then
-  docker-compose -f ./docker-compose.yml --env-file ./app/.env "$ACTION"
+  docker compose -f ./docker-compose.yml --env-file ./app/.env "$ACTION"
 else
-  docker-compose -f ./docker-compose.yml --env-file ./app/.env "$ACTION" $FLAGS
+  docker compose -f ./docker-compose.yml --env-file ./app/.env "$ACTION" $FLAGS
 fi

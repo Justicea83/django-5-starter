@@ -7,4 +7,4 @@ if [ "$#" -lt 1 ]; then
 fi
 
 # Execute the Docker Compose command with all provided arguments
-docker-compose -f ./docker-compose.yml --env-file ./app/.env run --rm app sh -c "python manage.py $*"
+docker compose -f ./docker-compose.yml --env-file ./app/.env run --rm app sh -c "python manage.py $*"

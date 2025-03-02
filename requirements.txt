@@ -1,13 +1,13 @@
-Django==5.0
-djangorestframework==3.14.0
+Django==5.1
+djangorestframework==3.15.2
 psycopg2-binary==2.9.7
 drf-spectacular==0.27.0
 python-dotenv==1.0.0
 django-cors-headers==4.3.1
-gunicorn==21.2.0
+gunicorn==22.0.0
 Faker==22.0.0
 django-oauth-toolkit==2.3.0
-tqdm==4.66.1
+tqdm==4.66.3
 python-dateutil==2.8.2
 plac==1.4.2
 django-filter==23.5

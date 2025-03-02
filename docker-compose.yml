@@ -1,10 +1,9 @@
-version: "3.9"
-
 services:
   app:
     env_file:
       - app/.env
     container_name: starter_app
+    image: starter-app:latest
     build:
       context: .
       dockerfile: Dockerfile
@@ -45,7 +44,7 @@ services:
   adminer:
     env_file:
       - app/.env
-    container_name: capstone_adminer
+    container_name: starter_app_adminer
     image: dpage/pgadmin4:latest
     environment:
       PGADMIN_DEFAULT_EMAIL: "${PGADMIN_DEFAULT_EMAIL}"
