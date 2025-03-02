@@ -45,7 +45,8 @@ INSTALLED_APPS = [
     'drf_spectacular',
     'corsheaders',
     'django_filters',
-    'core'
+    'core',
+    'background_jobs',
 ]
 
 MIDDLEWARE = [
@@ -161,3 +162,9 @@ OAUTH2_PROVIDER = {
     'OAUTH_SINGLE_ACCESS_TOKEN': True,
     'OAUTH_DELETE_EXPIRED': True
 }
+
+CELERY_BROKER_URL = os.getenv('CELERY_BROKER')
+CELERY_RESULT_BACKEND = os.getenv('CELERY_BACKEND')
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+CELERY_TIMEZONE = 'UTC'

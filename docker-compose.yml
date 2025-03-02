@@ -76,6 +76,40 @@ services:
         - ping
       retries: 3
       timeout: 5s
+      
+  celery_worker:
+    env_file:
+      - app/.env
+    container_name: starter_app_celery_worker
+    image: starter-app:latest
+    volumes:
+      - ./app:/app
+    command: >
+      sh -c "/start-celery-worker"
+    environment:
+      DB_HOST: "${DB_HOST}"
+      DB_NAME: "${DB_DATABASE}"
+      DB_USER: "${DB_USERNAME}"
+      DB_PASSWORD: "${DB_PASSWORD}"
+      DEV: true
+    depends_on:
+      - db
+      - redis
+
+  celery_beat:
+    env_file:
+      - app/.env
+    container_name: start_app_celery_beat
+    volumes:
+      - ./app:/app
+    image: starter-app:latest
+    environment:
+      DEV: true
+    command: >
+      sh -c "/start-celery-beat"
+    depends_on:
+      - db
+      - redis
 
 volumes:
   db-data:

@@ -37,3 +37,19 @@ RUN mkdir /app/static
 
 RUN chmod 777 /app/static
 RUN chmod 777 /app/staticfiles
+
+# Celery worker
+COPY /app/celery/worker/start /start-celery-worker
+RUN sed -i 's/\r$//g' /start-celery-worker
+
+# Celery beat
+COPY /app/celery/beat/start /start-celery-beat
+RUN sed -i 's/\r$//g' /start-celery-beat
+
+# Celery beat
+COPY /app/celery/flower/start /start-flower
+RUN sed -i 's/\r$//g' /start-flower
+
+RUN chmod 777 /start-celery-worker
+RUN chmod 777 /start-celery-beat
+RUN chmod 777 /start-flower

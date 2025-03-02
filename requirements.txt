@@ -11,3 +11,7 @@ tqdm==4.66.3
 python-dateutil==2.8.2
 plac==1.4.2
 django-filter==23.5
+celery==5.4.0
+watchdog==4.0.0
+redis==5.0.1
+django-redis==5.4.0

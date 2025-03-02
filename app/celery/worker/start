@@ -1,0 +1,7 @@
+#!/bin/bash
+
+set -o errexit
+
+set -o nounset
+
+watchmedo auto-restart -d app/ -p '*.py' -- celery -A app worker -l info
